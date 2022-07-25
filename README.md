@@ -1,2 +1,3 @@
 # clues 
-- simple html/js/css game
+- First guess is blind
+- Guess the word with subsequent clues
