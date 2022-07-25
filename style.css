@@ -1,0 +1,90 @@
+h1 {
+ text-align: center;
+}
+
+#game-board {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.clues {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1.5px;
+}
+
+.letter-box {
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 3px;
+  margin: 2px;
+  color: rgb(255, 255, 255);
+  font-size: 2.5rem;
+  font-weight: 700;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.filled-box {
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.letter-row {
+  display: flex;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+#keyboard-cont {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  bottom: 5px;
+}
+
+#keyboard-cont div {
+  display: flex;
+}
+
+.second-row {
+  margin: 0.5rem 0;
+}
+
+.forth-row {
+  margin: 0.5rem 0;
+}
+
+.keyboard-button {
+  border: 2px solid rgb(255, 255, 255);
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.5rem;
+  margin: 0 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+
+.info-button {
+  border: 2px solid rgb(255, 255, 255);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.5rem;
+  margin: 0 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+  
