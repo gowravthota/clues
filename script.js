@@ -21,6 +21,7 @@ function initBoard() {
     document.getElementById("guess5").textContent=data[5];
 
     //set hidden
+    document.getElementById("skip").style.display = "none";
     document.getElementById("newchal").style.display = "none";
     document.getElementById("guess1").style.display = "none";
     document.getElementById("guess2").style.display = "none";
@@ -66,6 +67,13 @@ function showClue () {
     guesses += 1
 }
 
+// ------------------------- SKIP LEVEL ------------------------- 
+function skip () {
+    count += 1
+    reset()
+}
+
+
 // ------------------------- DELETE LETTER ------------------------- 
 function deleteLetter () {
     let row = document.getElementsByClassName("letter-row")[0]
@@ -102,6 +110,7 @@ function checkGuess () {
         }
         
         animateCSS(row, "bounce")
+        document.getElementById("skip").style.display = "none";
         document.getElementById("newchal").style.display = "block";
 
         points += 6 - guesses
@@ -113,6 +122,8 @@ function checkGuess () {
     } else {
         if (guesses <= 5) {
             showClue()
+        } else {
+            document.getElementById("skip").style.display = "block";
         }
         currentGuess = []
         toastr.warning("Incorrect Guess!")
@@ -215,6 +226,9 @@ document.getElementById("newchal").addEventListener("click", (e) => {
 })
 document.getElementById("info").addEventListener("click", (e) => {
     toastr.info("Guess the right n-letter word with the given clues! The first guess is blind, subsequent guesses will reveal more clues!")
+})
+document.getElementById("skip").addEventListener("click", (e) => {
+    skip()
 })
 // ------------------------- INIT ------------------------- 
 initBoard();

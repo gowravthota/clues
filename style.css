@@ -66,6 +66,10 @@ html, body {
   margin: 0.5rem 0;
 }
 
+.fifth-row {
+  margin: 0.5rem 0;
+}
+
 .keyboard-button {
   border: 2px solid rgb(255, 255, 255);
   font-size: 1.2rem;
@@ -87,4 +91,5 @@ html, body {
   text-transform: uppercase;
   border-radius: 3px;
 }
+
   
