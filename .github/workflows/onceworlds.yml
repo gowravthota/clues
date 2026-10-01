@@ -1,0 +1,60 @@
+name: Deploy to Onceworlds
+
+# Branches only: tags don't deploy.
+on:
+  push:
+    branches: ['**']
+
+# A newer push to the same branch replaces a deploy still running.
+concurrency:
+  group: onceworlds-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write # lets the Onceworlds CLI prove which repo is deploying; no API keys needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # The build never needs the repo's GitHub token, so it isn't left in .git/config.
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        if: hashFiles('bun.lock', 'bun.lockb') != ''
+
+      # Only if package.json has a build script, with the package manager its lockfile belongs to.
+      - name: Build
+        run: |
+          if [ ! -f package.json ] || [ "$(npm pkg get scripts.build)" = "{}" ]; then
+            exit 0
+          elif [ -f pnpm-lock.yaml ]; then
+            corepack enable
+            pnpm install --frozen-lockfile
+            pnpm run build
+          elif [ -f yarn.lock ]; then
+            corepack enable
+            yarn install
+            yarn run build
+          elif [ -f bun.lock ] || [ -f bun.lockb ]; then
+            bun install
+            bun run build
+          elif [ -f package-lock.json ]; then
+            npm ci
+            npm run build
+          else
+            npm install
+            npm run build
+          fi
+
+      # Pushes to the production branch (set in the dashboard or onceworlds.json,
+      # default "main") go live; other branches get a preview URL in the job log.
+      - name: Deploy
+        run: npx --yes @onceworlds/cli@0 deploy
